@@ -1,0 +1,185 @@
+/* =============== OSNOVNI STIL =============== */
+.property-page {
+  width: 100%;
+  min-height: 100vh;
+  background: #201f1f;
+  padding: 6rem 3rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: inherit;
+}
+
+/* =============== GRID LAYOUT =============== */
+.props-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 2.5rem;
+  align-items: start;
+  max-width: 1400px;
+}
+
+/* =============== SIDEBAR =============== */
+.props-sidebar {
+  width: 300px;
+  background: #9C9078;
+  backdrop-filter: blur(12px);
+  border: transparent;
+  border-radius: 16px;
+  padding: 1.8rem;
+  position: sticky;
+  top: 100px;
+  
+  height: fit-content;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.props-sidebar:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* =============== LISTA OGLASA =============== */
+.props-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.props-list h1 {
+  font-size: 2.2rem;
+  
+  color: #aaaaaa;
+  margin-bottom: 0.3rem;
+}
+
+.props-sub {
+  font-size: 1.05rem;
+  color: #6b7280;
+  margin-bottom: 1.8rem;
+}
+
+/* =============== KARTE =============== */
+.props-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.8rem;
+}
+
+/* =============== POJEDINAČNA KARTA =============== */
+.prop-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.prop-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== Slika ===== */
+.prop-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* ===== Tekstualni dio ===== */
+.prop-body {
+  padding: 1.2rem 1.4rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.prop-body h3 {
+  font-size: 1.2rem;
+  color: #111827;
+
+}
+
+.prop-body p {
+  color: #4b5563;
+  font-size: 0.95rem;
+}
+
+.prop-price {
+ 
+  
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+/* =============== HOVER EFEKTI =============== */
+.prop-card:hover img {
+  transform: scale(1.05);
+  transition: transform 0.4s ease;
+}
+
+/* =============== SCROLLBAR (custom) =============== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* =============== MEDIA UPITI =============== */
+
+/* 💻  Laptop */
+@media (max-width: 1200px) {
+  .props-grid {
+    grid-template-columns: 250px 1fr;
+  }
+}
+
+/* 📱 Tablet */
+@media (max-width: 900px) {
+  .props-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .props-sidebar {
+    position: relative;
+    top: 0;
+    width: 100%;
+  }
+
+  .property-page {
+    padding: 6rem 2rem;
+  }
+}
+
+/* 📱 Mobilni */
+@media (max-width: 600px) {
+  .props-cards {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+
+  .props-list h1 {
+    font-size: 1.7rem;
+  }
+
+  .prop-card img {
+    height: 180px;
+  }
+
+  .prop-body h3 {
+    font-size: 1.1rem;
+  }
+}

@@ -1,0 +1,130 @@
+/* ===== NAVBAR ===== */
+.hero-nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 3rem;
+  background: transparent;
+
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.nav-logo a {
+  font-size: 1.4rem;
+
+  color: white;
+  text-decoration: none;
+}
+
+/* ===== NAV LINKS ===== */
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  list-style: none;
+  transition: height 0.3s ease;
+}
+
+.nav-links a {
+  font-weight: 500;
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #D49B41;
+}
+
+.btn-register {
+  background: #9C9078;
+  color: white !important;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.btn-register:hover {
+  background: #60655D;
+}
+
+/* ===== BURGER ICON ===== */
+.burger-icon {
+  display: none;
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+  z-index: 101;
+}
+
+/* ===== HERO CONTENT ===== */
+.hero-content {
+  z-index: 2;
+  position: relative;
+  text-align: left;
+  max-width: 800px;
+  padding: 0 2rem;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logout-btn {
+  background: #9C9078;
+  color: white !important;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+  background: #60655D
+}
+
+.profile-icon a {
+  color: #00ff80;
+  transition: color 0.3s ease;
+}
+
+.profile-icon a:hover {
+  color: #60655D;
+}
+
+
+@media (max-width: 768px) {
+  .burger-icon {
+    display: block;
+    background: transparent;
+    color: #9C9078;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.9);
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+  }
+
+  .nav-links.open {
+    height: 200px;
+  }
+
+  .nav-links li {
+    margin: 15px 0;
+  }
+
+
+}

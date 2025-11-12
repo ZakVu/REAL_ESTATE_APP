@@ -1,0 +1,86 @@
+.advice-section {
+  width: 100%;
+  min-height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, #f5f5f5, #e0e0e0);
+  padding: 60px 0;
+  overflow: hidden;
+}
+
+.advice-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 85%;
+  max-width: 1200px;
+}
+
+.advice-text {
+  flex: 1;
+  position: relative;
+  padding: 40px;
+}
+
+.vertical-title {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  font-size: 3.2rem;
+  font-weight: 600;
+  color: #9C9078;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+.advice-text p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #333;
+  max-width: 450px;
+}
+
+.advice-image-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.advice-image {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 20px;
+  object-fit: cover;
+  filter: brightness(90%) saturate(110%);
+  transition: all 0.6s ease;
+  /* Efekat utapanja */
+  -webkit-mask-image: linear-gradient(
+    to left,
+    transparent 0%,
+    rgba(196, 196, 196, 0.205) 20%,
+    rgba(230, 230, 230, 0.377) 80%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 1) 20%,
+    rgba(0, 0, 0, 1) 80%,
+    transparent 100%
+  );
+   mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 1) 20%,
+    rgba(0, 0, 0, 1) 80%,
+    transparent 100%
+  );
+}
+
+.advice-image:hover {
+  transform: scale(1.05);
+  filter: brightness(100%) saturate(120%);
+}

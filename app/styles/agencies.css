@@ -1,0 +1,75 @@
+.agencies-section {
+  background-color: #201f1f;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.agencies-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #9C9078;
+  margin-bottom: 2.5rem;
+}
+
+.agencies-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.agency-card {
+  position: relative;
+  width: 160px;
+  height: 100px;
+  background-color: #fff;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.agency-card:hover {
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+.agency-logo {
+  position: absolute;
+  inset: 0;
+}
+
+/* Slika popunjava prostor */
+.agency-img {
+  object-fit: cover; /* ili 'contain' ako želiš da se cijeli logo vidi bez rezanja */
+}
+
+/* 📱 Media query za telefone */
+@media (max-width: 768px) {
+  .agency-card {
+    width: calc(33.33% - 1rem);
+    height: 90px;
+  }
+
+  .agencies-container {
+    gap: 1rem;
+  }
+
+  .agencies-title {
+    font-size: 1.6rem;
+    margin-bottom: 2rem;
+  }
+}
+
+/* 📱📱 Za još manje ekrane (npr. ispod 480px) po 2 u redu */
+@media (max-width: 480px) {
+  .agency-card {
+    width: calc(50% - 0.5rem);
+    height: 80px;
+  }
+
+  .agencies-container {
+    gap: 0.5rem;
+  }
+}
