@@ -86,7 +86,7 @@ const ProfilePage = () => {
         </div>
 
         <nav className="profile-nav">
-          <button onClick={() => router.push("/profile")} className="nav-btn active">👤 Novi oglas</button>
+          <button onClick={() => router.push("/AddAdvert")} className="nav-btn active">👤 Novi oglas</button>
           <button onClick={() => router.push("/my-listings")} className="nav-btn">📦 Moji oglasi</button>
           <button onClick={() => router.push("/saved-listings")} className="nav-btn">💚 Spašeni oglasi</button>
           <button onClick={() => router.push("/messages")} className="nav-btn">💬 Poruke</button>

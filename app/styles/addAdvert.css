@@ -1,0 +1,91 @@
+.new-listing-container {
+  max-width: 700px;
+  margin: 40px auto;
+  background: #f4f4f4;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.new-listing-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.new-listing-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.new-listing-form label {
+  font-weight: bold;
+  color: #444;
+}
+
+.new-listing-form input,
+.new-listing-form textarea,
+.new-listing-form select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  outline: none;
+  transition: border 0.2s ease;
+}
+
+.new-listing-form input:focus,
+.new-listing-form textarea:focus,
+.new-listing-form select:focus {
+  border-color: #00b894;
+}
+
+.preview-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.preview-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.submit-btn {
+  background-color: #00b894;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #019870;
+}
+
+.success-message {
+  margin-top: 15px;
+  text-align: center;
+  color: #00b894;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .new-listing-container {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  .preview-image {
+    width: 80px;
+    height: 80px;
+  }
+}
