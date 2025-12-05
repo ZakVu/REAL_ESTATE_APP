@@ -1,0 +1,30 @@
+/* styles/loading.css */
+
+/* centriranje */
+.loading-wrapper {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  z-index: 9999;
+}
+
+/* moderan spinner */
+.loading-spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid rgba(255, 255, 255, 0.15);
+  border-top-color: #22c55e; /* tvoja bright green */
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.25);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import "../../styles/profile.css";
 import { useRouter } from "next/navigation";
 import { FaBars, FaTimes } from "react-icons/fa";
+import Loading from "@/app/components/Loading";
 
 const cities = [ "beograd", "novi_sad", "nis", "kragujevac", "subotica" ];
 const clientTypes = ["fizicko lice", "agencija", "investitor", "banka", "drugo pravno lice"];
@@ -66,7 +67,7 @@ const ProfilePage = () => {
     }
   };
 
-  if (!client) return <p>Učitavanje podataka...</p>;
+  if (!client) return <Loading /> ;
 
   return (
     <div className="profile-wrapper">
@@ -86,7 +87,7 @@ const ProfilePage = () => {
         </div>
 
         <nav className="profile-nav">
-          <button onClick={() => router.push("/AddAdvert")} className="nav-btn active">👤 Novi oglas</button>
+          <button onClick={() => router.push("/SelectCategory")} className="nav-btn active">👤 Novi oglas</button>
           <button onClick={() => router.push("/my-listings")} className="nav-btn">📦 Moji oglasi</button>
           <button onClick={() => router.push("/saved-listings")} className="nav-btn">💚 Spašeni oglasi</button>
           <button onClick={() => router.push("/messages")} className="nav-btn">💬 Poruke</button>
