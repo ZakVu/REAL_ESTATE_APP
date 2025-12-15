@@ -5,20 +5,22 @@ import { useRouter } from "next/navigation";
 import {
   getCurrentClient,
   updateClient,
-  uploadProfilrImage,
+  
 } from "@/app/lib/clientApi";
 
 import "../../styles/profile.css";
 import { FaBars, FaTimes } from "react-icons/fa";
 import Loading from "@/app/components/Loading";
 
+// Sve gradove iz Swaggera
 const cities = [
   "aleksinac","alibunar","arandjelovac","asanja","badanj","badovinci","bajina_basta",
   "banja_koviljaca","beograd","novi_sad","nis","kragujevac","subotica"
+  // po potrebi dodaj sve ostale gradove sa Swagger liste
 ];
 
 const clientTypes = [
-  "fizicko_lice", "agencija", "investitor", "banka", "drugo pravno lice"
+  "fizicko_lice", "agencija", "investitor", "banka", "drugo_pravno_lice"
 ];
 
 export default function ProfilePage() {
@@ -30,7 +32,7 @@ export default function ProfilePage() {
 
   const router = useRouter();
 
-  // LOAD CLIENT
+  // -------------------- LOAD CLIENT --------------------
   useEffect(() => {
     const fetchClient = async () => {
       try {
@@ -40,24 +42,17 @@ export default function ProfilePage() {
         console.error("Greška pri učitavanju klijenta:", err);
       }
     };
-
     fetchClient();
   }, []);
 
   // -------------------- HANDLERS --------------------
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
 
-    // email mora i u user.email
     if (name === "email") {
-      setClient({
-        ...client,
-        email: value,
-        user: { ...client.user, email: value },
-      });
+      setClient({ ...client, email: value, user: { ...client.user, email: value } });
       return;
     }
 
@@ -72,51 +67,45 @@ export default function ProfilePage() {
     setClient({ ...client, imageFile: file });
   };
 
+  // -------------------- SAVE --------------------
   const handleSave = async () => {
-    try {
-      if (!client) return;
+  if (!client) return;
 
-      // 1️⃣ UPLOAD SLIKE AKO POSTOJI
-      if (client.imageFile) {
-        const formData = new FormData();
-        formData.append("image", client.imageFile);
+  // Swagger validacija
+  if (!client.first_name || !client.last_name || !client.email) {
+    setMessage("Ime, prezime i email su obavezni.");
+    return;
+  }
 
-        const updated = await uploadProfilrImage(client.id, formData);
-        client.image = updated.image; // url iz backend-a
-      }
+  if (client.city && !cities.includes(client.city)) {
+    setMessage("Nevažeći grad.");
+    return;
+  }
 
-      // 2️⃣ UPDATE PODATAKA
-      const payload = {
-        user: {
-          username: client.user.username,
-          email: client.user.email,
-        },
-        first_name: client.first_name,
-        last_name: client.last_name,
-        cell_phone: client.cell_phone,
-        email: client.email,
-        post_office_box: client.post_office_box,
-        address: client.address,
-        postal_code: client.postal_code,
-        city: client.city,
-        client_type: client.client_type,
-        image: client.image,
-      };
+  if (client.client_type && !clientTypes.includes(client.client_type)) {
+    setMessage("Nevažeći tip klijenta.");
+    return;
+  }
 
-      await updateClient(client.id, payload);
+  try {
+    console.group("🧾 CLIENT BEFORE SAVE");
+    console.log(client);
+    console.groupEnd();
 
-      setMessage("Podaci su uspješno ažurirani!");
-      setIsEditing(false);
-      setTimeout(() => setMessage(""), 3000);
+    await updateClient(client.id, client);
 
-    } catch (err) {
-      console.error("❌ Greška pri čuvanju:", err);
-      setMessage("Greška pri ažuriranju.");
-    }
-  };
+    setMessage("✅ Podaci su uspješno ažurirani!");
+    setIsEditing(false);
+    setTimeout(() => setMessage(""), 3000);
+
+  } catch (err) {
+    console.error("❌ SAVE FAILED", err);
+    setMessage("❌ Greška pri ažuriranju.");
+  }
+};
+
 
   // -------------------- UI --------------------
-
   if (!client) return <Loading />;
 
   return (
@@ -151,90 +140,37 @@ export default function ProfilePage() {
           <h2>Profil</h2>
 
           <div className="profile-info">
-            
-            {/* fields... sve isto kao kod tebe */}
             <label>Ime</label>
-            <input
-              name="first_name"
-              value={client.first_name || ""}
-              onChange={handleChange}
-              disabled={!isEditing}
-            />
+            <input name="first_name" value={client.first_name || ""} onChange={handleChange} disabled={!isEditing} />
 
             <label>Prezime</label>
-            <input
-              name="last_name"
-              value={client.last_name || ""}
-              onChange={handleChange}
-              disabled={!isEditing}
-            />
+            <input name="last_name" value={client.last_name || ""} onChange={handleChange} disabled={!isEditing} />
 
             <label>Email</label>
-            <input
-              name="email"
-              value={client.email || ""}
-              onChange={handleChange}
-              disabled={!isEditing}
-            />
+            <input name="email" value={client.email || ""} onChange={handleChange} disabled={!isEditing} />
 
             <label>Telefon</label>
-            <input
-              name="cell_phone"
-              value={client.cell_phone || ""}
-              onChange={handleChange}
-              disabled={!isEditing}
-            />
+            <input name="cell_phone" value={client.cell_phone || ""} onChange={handleChange} disabled={!isEditing} />
 
             <label>Grad</label>
-            <select
-              name="city"
-              value={client.city || ""}
-              onChange={handleChange}
-              disabled={!isEditing}
-            >
+            <select name="city" value={client.city || ""} onChange={handleChange} disabled={!isEditing}>
               <option value="">Izaberite grad</option>
-              {cities.map((c) => (
-                <option key={c} value={c}>
-                  {c.replace(/_/g, " ")}
-                </option>
-              ))}
+              {cities.map((c) => <option key={c} value={c}>{c.replace(/_/g, " ")}</option>)}
             </select>
 
             <label>Adresa</label>
-            <input
-              name="address"
-              value={client.address || ""}
-              onChange={handleChange}
-              disabled={!isEditing}
-            />
+            <input name="address" value={client.address || ""} onChange={handleChange} disabled={!isEditing} />
 
             <label>Poštansko sanduče</label>
-            <input
-              name="post_office_box"
-              value={client.post_office_box || ""}
-              onChange={handleChange}
-              disabled={!isEditing}
-            />
+            <input name="post_office_box" value={client.post_office_box || ""} onChange={handleChange} disabled={!isEditing} />
 
             <label>Poštanski broj</label>
-            <input
-              name="postal_code"
-              value={client.postal_code || ""}
-              onChange={handleChange}
-              disabled={!isEditing}
-            />
+            <input name="postal_code" value={client.postal_code || ""} onChange={handleChange} disabled={!isEditing} />
 
             <label>Tip klijenta</label>
-            <select
-              name="client_type"
-              value={client.client_type || ""}
-              onChange={handleChange}
-              disabled={!isEditing}
-            >
+            <select name="client_type" value={client.client_type || ""} onChange={handleChange} disabled={!isEditing}>
               <option value="">Izaberite tip</option>
-              {clientTypes.map((t) => (
-                <option key={t} value={t}>{t.replace(/_/g, " ")}</option>
-              ))}
+              {clientTypes.map((t) => <option key={t} value={t}>{t.replace(/_/g, " ")}</option>)}
             </select>
 
             {isEditing && (

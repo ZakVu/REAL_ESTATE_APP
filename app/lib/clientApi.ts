@@ -1,79 +1,58 @@
+// app/lib/clientApi.ts
 import api from "./api";
 
 // -----------------------------------------------------
-// GET – Trenutni klijent (ulogovani)
+// GET – Trenutni klijent
 // -----------------------------------------------------
 export async function getCurrentClient() {
-    const res = await api.get("/clients/me/");
-    return res.data;
+  const res = await api.get("/clients/me/");
+  return res.data;
 }
 
 // -----------------------------------------------------
-// CREATE – Kreiranje novog klijenta (ako uopšte treba)
+// UPDATE – PATCH /clients/{id}/
+// Swagger: multipart/form-data
 // -----------------------------------------------------
-export async function createClient(data: any) {
-    const res = await api.post("/clients/", data);
-    return res.data;
-}
+export async function updateClient(id: number, client: any) {
+  try {
+    const formData = new FormData();
 
-// -----------------------------------------------------
-// UPDATE – Ažuriranje klijenta (PATCH je ispravan izbor)
-// -----------------------------------------------------
-export async function updateClient(id: number, clientData: any) {
-    try {
-        const payload = {
-            user: {
-                username: clientData.user?.username || "",
-                email: clientData.user?.email || clientData.email || "",
-            },
-            first_name: clientData.first_name || "",
-            last_name: clientData.last_name || "",
-            cell_phone: clientData.cell_phone || "",
-            email: clientData.email,
-            post_office_box: clientData.post_office_box || "",
-            address: clientData.address || "",
-            city: clientData.city || "",
-            postal_code: clientData.postal_code || "",
-            client_type: clientData.client_type || "",
-        };
+    // REQUIRED
+    formData.append("first_name", client.first_name);
+    formData.append("last_name", client.last_name);
+    formData.append("email", client.email);
 
-        const res = await api.patch(`/clients/${id}/`, payload);
-        return res.data;
-    } catch (err) {
-        console.error("❌ API error in updateClient:", err);
-        throw err;
+    // OPTIONAL
+    if (client.cell_phone) formData.append("cell_phone", client.cell_phone);
+    if (client.post_office_box) formData.append("post_office_box", client.post_office_box);
+    if (client.address) formData.append("address", client.address);
+    if (client.city) formData.append("city", client.city);
+    if (client.postal_code) formData.append("postal_code", client.postal_code);
+    if (client.client_type) formData.append("client_type", client.client_type);
+
+    // IMAGE
+    if (client.imageFile) {
+      formData.append("image", client.imageFile);
     }
-}
 
-// -----------------------------------------------------
-// PARTIAL UPDATE
-// -----------------------------------------------------
-export async function patchClient(id: number, data: any) {
-    const res = await api.patch(`/clients/${id}/`, data);
-    return res.data;
-}
-
-// -----------------------------------------------------
-// DELETE
-// -----------------------------------------------------
-export async function deleteClient(id: number) {
-    const res = await api.delete(`/clients/${id}/`);
-    return res.status === 204;
-}
-
-// -----------------------------------------------------
-// UPLOAD IMAGE (ISPRAVLJENO)
-// -----------------------------------------------------
-export async function uploadProfilrImage(clientId: number, formData: FormData) {
-    try {
-        const res = await api.post(
-            `/clients/${clientId}/image/`,
-            formData,
-            { headers: { "Content-Type": "multipart/form-data" } }
-        );
-        return res.data;
-    } catch (error) {
-        console.error("❌ Error uploading profile image:", error);
-        throw error;
+    // 🔍 DEBUG
+    console.group("📤 UPDATE CLIENT PAYLOAD");
+    for (const [key, value] of formData.entries()) {
+      console.log(key, value);
     }
+    console.groupEnd();
+
+    const res = await api.patch(`/clients/${id}/`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    console.log("✅ UPDATE CLIENT RESPONSE:", res.data);
+    return res.data;
+
+  } catch (err: any) {
+    console.error("❌ API error in updateClient");
+    console.error("STATUS:", err?.response?.status);
+    console.error("DATA:", err?.response?.data);
+    throw err;
+  }
 }
